@@ -43,4 +43,12 @@ public class Fund {
 		}
 		return retval;
 	}
+	public String GoodKarma(char value) {
+		this._karma = (char) (this._karma + value);
+		return this.Karma();
+	}
+	public String BadKarma(char value) {
+		this._karma = (char) (this._karma - value);
+		return this.Karma();
+	}
 }

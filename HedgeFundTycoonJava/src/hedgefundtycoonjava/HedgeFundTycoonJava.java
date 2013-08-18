@@ -4,6 +4,8 @@
  */
 package hedgefundtycoonjava;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Helio
@@ -15,5 +17,10 @@ public class HedgeFundTycoonJava {
 	 */
 	public static void main(String[] args) {
 		// TODO code application logic here
+		
+    JFrame frame = new TestGUI();
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.pack();
+    frame.setVisible(true);
 	}
 }
