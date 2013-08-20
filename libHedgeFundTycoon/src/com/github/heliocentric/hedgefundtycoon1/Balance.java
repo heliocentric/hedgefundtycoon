@@ -11,6 +11,6 @@ import java.math.BigDecimal;
  * @author Helio
  */
 public class Balance {
-	public Unit Currency;
+	public Unit Unit;
 	public BigDecimal Amount;
 }
