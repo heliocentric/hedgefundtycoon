@@ -9,10 +9,10 @@ package com.github.heliocentric.hedgefundtycoon1;
  * @author Helio
  */
 public class CheckingAccount implements Account {
-
+	private Integer Balance;
 	@Override
-	public Integer getValue() {
-		throw new UnsupportedOperationException("Not supported yet.");
+	public Integer getValue(Currency currency) {
+		return this.Balance;
 	}
 
 	@Override
