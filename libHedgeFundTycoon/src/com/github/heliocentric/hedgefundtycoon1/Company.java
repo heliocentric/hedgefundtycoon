@@ -10,5 +10,10 @@ package com.github.heliocentric.hedgefundtycoon1;
  */
 public class Company implements Agent {
 	private Fundamental Current;
+
+	@Override
+	public boolean PlayTurn() {
+		return true;
+	}
 	
 }

@@ -47,14 +47,22 @@ public class Fundamental {
 	}
 	
 	
-	public void IncreaseAsset(String Name, BigDecimal value) {
+	public void Income(String Name, BigDecimal value) {
 		
 	}
-	public void DecreaseAsset(String Name, BigDecimal value) {
+	public void Expense(String Name, BigDecimal value) {
 		
 	}
 	public Balance getAsset(String Name) {
 		return null;
+		
+	}
+	
+	
+	public void IncurLiability(String Name, BigDecimal value, String AssetToTransferTo) {
+		
+	}
+	public void DecreaseLiability(String Name, BigDecimal value, String AssetToTransferFrom) {
 		
 	}
 	public Balance getLiability(String Name) {
