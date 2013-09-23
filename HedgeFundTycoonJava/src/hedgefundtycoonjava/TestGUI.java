@@ -4,7 +4,9 @@
  */
 package hedgefundtycoonjava;
 
+import com.github.heliocentric.hedgefundtycoon1.Economy;
 import com.github.heliocentric.hedgefundtycoon1.Fund;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +20,7 @@ public class TestGUI extends javax.swing.JFrame {
 	public TestGUI() {
 		initComponents();
 	}
-	public Fund Main;
+	public Economy Main;
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,9 +60,19 @@ public class TestGUI extends javax.swing.JFrame {
         jMenu3.add(MnuNew);
 
         jMenuItem2.setText("Open");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         jMenuItem3.setText("Save");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem3);
 
         jMenuItem4.setText("Quit");
@@ -96,12 +108,22 @@ public class TestGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MnuNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuNewActionPerformed
-        this.Main = new Fund();
+        this.Main = new Economy();
     }//GEN-LAST:event_MnuNewActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        this.Main = new Economy();
+        this.Main.Load();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        this.Main.Save();
+        JOptionPane.showMessageDialog(null, this.Main.getSaveFile(), "Info: Save Location", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
 	/**
 	 * @param args the command line arguments

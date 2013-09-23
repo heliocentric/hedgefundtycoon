@@ -51,7 +51,4 @@ public class Fund {
 		this._karma = (char) (this._karma - value);
 		return this.Karma();
 	}
-	public void Save() {
-		
-	}
 }

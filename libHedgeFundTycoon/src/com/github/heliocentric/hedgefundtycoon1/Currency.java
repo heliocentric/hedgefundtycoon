@@ -19,13 +19,13 @@ public class Currency implements Unit {
 	private String _symbol;
 	@Override
 	public String getSymbol() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return this._symbol;
 	}
 
 	private String _name;
 	@Override
 	public String getName() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return this._name;
 	}
 
 	@Override
@@ -37,5 +37,17 @@ public class Currency implements Unit {
 	public void setName(String name) {
 		this._name = name;
 	}
+
+        private BigDecimal _factor;
+    @Override
+    public BigDecimal ConversionFactor() {
+        return this._factor;
+    }
+
+    @Override
+    public BigDecimal Value(Unit Currency) {
+        BigDecimal targetfactor = Currency.ConversionFactor();
+        return this._factor.divide(targetfactor);
+    }
 	
 }
