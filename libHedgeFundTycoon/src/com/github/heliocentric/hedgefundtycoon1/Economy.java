@@ -4,6 +4,8 @@
  */
 package com.github.heliocentric.hedgefundtycoon1;
 
+import com.github.heliocentric.hedgefundtycoon1.dbi.Database;
+import com.github.heliocentric.hedgefundtycoon1.dbi.h2db;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +19,7 @@ import org.h2.Driver;
 public class Economy {
 
     private String _savefile;
-
+    private Database db;
     public void Load() {
     }
 
@@ -27,32 +29,10 @@ public class Economy {
     public Economy() {
     }
 
-    private void _open_db() {
-
-        String URL = "jdbc:h2:" + this._savefile;
-        try {
-            Class.forName("org.h2.Driver").newInstance();
-            Connection conn;
-            conn = DriverManager.getConnection(URL, "sa", "");
-
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this._create_schema();
-
-
-    }
 
     public void New() {
         this._savefile = System.getProperty("user.dir") + File.separator + "autosave.econ";
-        this._open_db();
+        this.db = new h2db();
     }
 
     public String getSaveFile() {
@@ -62,13 +42,9 @@ public class Economy {
     public void EndTurn() {
     }
 
-    private String _get_version() {
-        String ver = "0.0.0";
-        return ver;
-    }
 
     public String getVersion() {
-        return this._get_version();
+        return this.db.GetVersion();
     }
 
     private void _create_schema() {
