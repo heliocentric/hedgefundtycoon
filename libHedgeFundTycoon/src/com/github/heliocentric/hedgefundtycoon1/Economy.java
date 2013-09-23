@@ -45,8 +45,8 @@ public class Economy {
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // add application code here
-  
+        this._create_schema();
+
 
     }
 
@@ -60,5 +60,18 @@ public class Economy {
     }
 
     public void EndTurn() {
+    }
+
+    private String _get_version() {
+        String ver = "0.0.0";
+        return ver;
+    }
+
+    public String getVersion() {
+        return this._get_version();
+    }
+
+    private void _create_schema() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
