@@ -109,6 +109,7 @@ public class TestGUI extends javax.swing.JFrame {
 
     private void MnuNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuNewActionPerformed
         this.Main = new Economy();
+        this.Main.New();
     }//GEN-LAST:event_MnuNewActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
