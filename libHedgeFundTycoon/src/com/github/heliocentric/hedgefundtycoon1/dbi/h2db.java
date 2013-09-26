@@ -17,33 +17,33 @@ import java.util.logging.Logger;
  */
 public class h2db implements Database {
 
-    private Connection conn;
-    @Override
-    public void Open(String path) {
-        
-        String URL = "jdbc:h2:" + path;
-        try {
-            Class.forName("org.h2.Driver").newInstance();
-            this.conn = DriverManager.getConnection(URL, "sa", "");
+	private Connection conn;
 
-            this.conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	@Override
+	public void Open(String path) {
 
-    }
+		String URL = "jdbc:h2:" + path;
+		try {
+			Class.forName("org.h2.Driver").newInstance();
+			this.conn = DriverManager.getConnection(URL, "sa", "");
 
-    @Override
-    public String GetVersion() {
-        String ver = "0.0.0";
-        
-        return ver;
-    }
-    
+			this.conn.close();
+		} catch (SQLException ex) {
+			Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (ClassNotFoundException ex) {
+			Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (InstantiationException ex) {
+			Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IllegalAccessException ex) {
+			Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+	}
+
+	@Override
+	public String GetVersion() {
+		String ver = "0.0.0";
+
+		return ver;
+	}
 }

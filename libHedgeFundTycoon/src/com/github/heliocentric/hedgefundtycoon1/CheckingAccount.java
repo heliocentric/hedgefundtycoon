@@ -9,7 +9,9 @@ package com.github.heliocentric.hedgefundtycoon1;
  * @author Helio
  */
 public class CheckingAccount implements Account {
+
 	private Integer Balance;
+
 	@Override
 	public Integer getValue(Currency currency) {
 		return this.Balance;
@@ -24,8 +26,8 @@ public class CheckingAccount implements Account {
 	public Integer RemoveFunds(Integer Value) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
-
 	private boolean locked = false;
+
 	@Override
 	public boolean getLock() {
 		if (this.locked = false) {
@@ -45,5 +47,4 @@ public class CheckingAccount implements Account {
 			return false;
 		}
 	}
-	
 }

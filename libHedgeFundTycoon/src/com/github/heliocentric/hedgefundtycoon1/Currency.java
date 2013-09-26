@@ -17,12 +17,13 @@ public class Currency implements Unit {
 		return null;
 	}
 	private String _symbol;
+
 	@Override
 	public String getSymbol() {
 		return this._symbol;
 	}
-
 	private String _name;
+
 	@Override
 	public String getName() {
 		return this._name;
@@ -37,17 +38,16 @@ public class Currency implements Unit {
 	public void setName(String name) {
 		this._name = name;
 	}
+	private BigDecimal _factor;
 
-        private BigDecimal _factor;
-    @Override
-    public BigDecimal ConversionFactor() {
-        return this._factor;
-    }
+	@Override
+	public BigDecimal ConversionFactor() {
+		return this._factor;
+	}
 
-    @Override
-    public BigDecimal Value(Unit Currency) {
-        BigDecimal targetfactor = Currency.ConversionFactor();
-        return this._factor.divide(targetfactor);
-    }
-	
+	@Override
+	public BigDecimal Value(Unit Currency) {
+		BigDecimal targetfactor = Currency.ConversionFactor();
+		return this._factor.divide(targetfactor);
+	}
 }

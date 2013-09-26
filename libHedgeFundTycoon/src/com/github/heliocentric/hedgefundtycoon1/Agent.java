@@ -18,5 +18,6 @@ public interface Agent {
 	 * serious problem, and the program should crash.
 	 * 
 	 */
+
 	public boolean PlayTurn();
 }

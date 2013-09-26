@@ -9,6 +9,8 @@ package com.github.heliocentric.hedgefundtycoon1.dbi;
  * @author Owner
  */
 public interface Database {
-    public void Open(String path);
-    public String GetVersion();
+
+	public void Open(String path);
+
+	public String GetVersion();
 }

@@ -9,11 +9,11 @@ package com.github.heliocentric.hedgefundtycoon1;
  * @author Helio
  */
 public class Company implements Agent {
+
 	private Fundamental Current;
 
 	@Override
 	public boolean PlayTurn() {
 		return true;
 	}
-	
 }
