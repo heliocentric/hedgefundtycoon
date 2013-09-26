@@ -13,4 +13,7 @@ public interface Database {
 	public void Open(String path);
 
 	public String GetVersion();
+
+	public void CreateSchema();
+	public void UpdateSchema();
 }
