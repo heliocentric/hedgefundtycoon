@@ -15,5 +15,12 @@ public interface Database {
 	public String GetVersion();
 
 	public void CreateSchema();
+
 	public void UpdateSchema();
+
+	public void BeginTransaction();
+
+	public void EndTransaction();
+
+	public void RollBackTransaction();
 }
