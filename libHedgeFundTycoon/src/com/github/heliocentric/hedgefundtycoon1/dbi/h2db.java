@@ -27,9 +27,8 @@ public final class h2db implements Database {
 		if (this.GetVersion().equals("0.0.0")) {
 			this.CreateSchema();
 		}
-		
-		Logger.getLogger(Economy.class.getName()).log(Level.INFO, "Post-UpdateSchema DB Version=" + this.GetVersion());
 		this.UpdateSchema();
+		Logger.getLogger(Economy.class.getName()).log(Level.INFO, "Post-UpdateSchema DB Version=" + this.GetVersion());
 	}
 
 	@Override
@@ -109,10 +108,33 @@ public final class h2db implements Database {
 			throw ex;
 		}
 	}
-
+	
+	private void _UpdateVersionNumber(String New) throws Exception {
+			this.schema_change("UPDATE tblConfig SET fldValue = '" + New + "' WHERE fldName = 'schema'");
+	}
 	@Override
 	public void UpdateSchema() {
 		if (this.GetVersion().equals("1.0.1")) {
+			try {
+				this.BeginTransaction();
+				this.schema_change("CREATE TABLE tblUnit (fldUnitID INT PRIMARY KEY AUTO_INCREMENT, fldUnitSymbol VARCHAR(255), fldUnitName VARCHAR(255), fldUnitShortName VARCHAR(255), fldUnitType INT);");
+				this._UpdateVersionNumber("1.0.2");
+				this.EndTransaction();
+			} catch (Exception ex) {
+				this.RollBackTransaction();
+				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		if (this.GetVersion().equals("1.0.2")) {
+			try {
+				this.BeginTransaction();
+				this.schema_change("CREATE TABLE tblUnitType (fldUnitID INT PRIMARY KEY AUTO_INCREMENT, fldUnitTypeName VARCHAR(255));");
+				this._UpdateVersionNumber("1.0.3");
+				this.EndTransaction();
+			} catch (Exception ex) {
+				this.RollBackTransaction();
+				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
 	}
 }
