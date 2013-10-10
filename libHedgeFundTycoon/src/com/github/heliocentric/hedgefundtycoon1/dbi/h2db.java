@@ -136,5 +136,17 @@ public final class h2db implements Database {
 				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
+		if (this.GetVersion().equals("1.0.3")) {
+			try {
+				this.BeginTransaction();
+				this.schema_change("CREATE TABLE tblBalance (fldBalanceID INT PRIMARY KEY AUTO_INCREMENT, fldBalanceUnitTypeID INT, fldBalanceValue DECIMAL(30,10))");
+				this.schema_change("CREATE TABLE tblFundamentalUnit (fldFundamentalUnitID INT PRIMARY KEY AUTO_INCREMENT, fldFundamentalUnitFundamentalID INT, fldFundamentalUnitType INT, fldFundamentalUnitName VARCHAR(255), fldFundamentalUnitBalanceID INT);");
+				this._UpdateVersionNumber("1.0.4");
+				this.EndTransaction();
+			} catch (Exception ex) {
+				this.RollBackTransaction();
+				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
 	}
 }
