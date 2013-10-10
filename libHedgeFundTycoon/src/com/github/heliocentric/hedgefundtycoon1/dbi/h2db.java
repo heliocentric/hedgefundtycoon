@@ -159,5 +159,16 @@ public final class h2db implements Database {
 				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
+		if (this.GetVersion().equals("1.0.5")) {
+			try {
+				this.BeginTransaction();
+				this.schema_change("CREATE TABLE tblAccount (fldAccountID INT PRIMARY KEY AUTO_INCREMENT, fldAccountBalanceID INT)");
+				this._UpdateVersionNumber("1.0.6");
+				this.EndTransaction();
+			} catch (Exception ex) {
+				this.RollBackTransaction();
+				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
 	}
 }
