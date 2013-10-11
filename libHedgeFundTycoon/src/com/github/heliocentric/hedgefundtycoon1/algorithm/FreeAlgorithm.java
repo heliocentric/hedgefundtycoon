@@ -20,7 +20,8 @@ public class FreeAlgorithm implements IAlgorithm {
 	}
 	@Override
 	public void setType(IAlgorithm.GameType Type) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		this._type = Type;
 	}
+	private IAlgorithm.GameType _type;
 	
 }

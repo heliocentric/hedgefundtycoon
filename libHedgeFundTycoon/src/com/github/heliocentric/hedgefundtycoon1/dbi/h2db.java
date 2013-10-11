@@ -34,7 +34,7 @@ public final class h2db implements Database {
 	@Override
 	public void Open(String path) {
 
-		String URL = "jdbc:h2:" + path;
+		String URL = "jdbc:h2:" + path + ";DEFRAG_ALWAYS=TRUE";
 		try {
 			Class.forName("org.h2.Driver").newInstance();
 			this.conn = DriverManager.getConnection(URL, "sa", "");
