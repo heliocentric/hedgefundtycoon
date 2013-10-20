@@ -200,10 +200,28 @@ public final class h2db implements Database {
 							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
 						}
 					}
+					if (this.GetVersion().Revision == 6) {
+						try {
+							this.BeginTransaction();
+							this.schema_change("CREATE TABLE tblObject (fldObjectID INT PRIMARY KEY AUTO_INCREMENT, fldObjectUUID VARCHAR(36), fldObjectType VARCHAR(255))");
+							this.schema_change("ALTER TABLE tblObject ADD CONSTRAINT fldObjectUUID_unique UNIQUE(fldObjectUUID)");
+							
+							this._UpdateVersionNumber("1.0.7");
+							this.EndTransaction();
+						} catch (Exception ex) {
+							this.RollBackTransaction();
+							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
 				}
 				if (this.GetVersion().Minor == 1) {
 				}
 				break;
 		}
+	}
+
+	@Override
+	public ThinObject GetObject(String Type, String ID) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 }
