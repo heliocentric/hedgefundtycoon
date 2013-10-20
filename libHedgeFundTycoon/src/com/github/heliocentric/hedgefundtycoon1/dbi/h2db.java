@@ -240,4 +240,9 @@ public final class h2db implements Database {
 	public ThinObject GetObject(String Type, String ID) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
+
+	@Override
+	public ThinObject NewObject(String Type) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
 }

@@ -11,4 +11,5 @@ package com.github.heliocentric.hedgefundtycoon1.dbi;
 public interface ThinObject {
 	public void setDB(Database DB);
 	public Database getDB();
+	public String getUUID();
 }

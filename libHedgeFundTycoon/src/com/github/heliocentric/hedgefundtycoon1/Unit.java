@@ -17,6 +17,8 @@ public interface Unit extends ThinObject {
 	public void setDB(Database db);
 	@Override
 	public Database getDB();
+	@Override
+	public String getUUID();
 	public void setSymbol(String symbol);
 
 	public String getSymbol();

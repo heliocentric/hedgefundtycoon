@@ -11,7 +11,7 @@ package com.github.heliocentric.hedgefundtycoon1.dbi;
 public interface Database {
 
 	public ThinObject GetObject(String Type, String ID);
-	
+	public ThinObject NewObject(String Type);
 	public void Open(String path);
 
 	public Version GetVersion();
