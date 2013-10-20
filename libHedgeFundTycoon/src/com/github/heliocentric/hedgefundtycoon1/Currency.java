@@ -4,6 +4,7 @@
  */
 package com.github.heliocentric.hedgefundtycoon1;
 
+import com.github.heliocentric.hedgefundtycoon1.dbi.Database;
 import java.math.BigDecimal;
 
 /**
@@ -49,5 +50,15 @@ public class Currency implements Unit {
 	public BigDecimal Value(Unit Currency) {
 		BigDecimal targetfactor = Currency.ConversionFactor();
 		return this._factor.divide(targetfactor);
+	}
+
+	@Override
+	public void setDB(Database db) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public Database getDB() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 }

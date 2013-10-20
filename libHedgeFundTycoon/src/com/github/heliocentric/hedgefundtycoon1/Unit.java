@@ -4,14 +4,19 @@
  */
 package com.github.heliocentric.hedgefundtycoon1;
 
+import com.github.heliocentric.hedgefundtycoon1.dbi.Database;
+import com.github.heliocentric.hedgefundtycoon1.dbi.ThinObject;
 import java.math.BigDecimal;
 
 /**
  *
  * @author Helio
  */
-public interface Unit {
-
+public interface Unit extends ThinObject {
+	@Override
+	public void setDB(Database db);
+	@Override
+	public Database getDB();
 	public void setSymbol(String symbol);
 
 	public String getSymbol();
