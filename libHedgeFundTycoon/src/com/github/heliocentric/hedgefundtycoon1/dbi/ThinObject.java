@@ -12,4 +12,5 @@ public interface ThinObject {
 	public void setDB(Database DB);
 	public Database getDB();
 	public String getUUID();
+	public void setUUID(String UUID);
 }

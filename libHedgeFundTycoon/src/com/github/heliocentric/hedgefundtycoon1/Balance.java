@@ -15,19 +15,25 @@ import java.math.BigDecimal;
 public class Balance implements ThinObject {
 	public Unit Unit;
 	public BigDecimal Amount;
-
+	private Database DB;
 	@Override
 	public void setDB(Database DB) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		this.DB = DB;
 	}
 
 	@Override
 	public Database getDB() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return this.DB;
+	}
+	
+	private String UUID;
+	@Override
+	public String getUUID() {
+		return this.UUID;
 	}
 
 	@Override
-	public String getUUID() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public void setUUID(String UUID) {
+		this.UUID = UUID;
 	}
 }

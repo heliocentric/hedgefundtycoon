@@ -51,19 +51,25 @@ public class Currency implements Unit {
 		BigDecimal targetfactor = Currency.ConversionFactor();
 		return this._factor.divide(targetfactor);
 	}
-
+	private Database DB;
 	@Override
 	public void setDB(Database db) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		this.DB = db;
 	}
 
 	@Override
 	public Database getDB() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return this.DB;
+	}
+
+	private String UUID;
+	@Override
+	public String getUUID() {
+		return this.UUID;
 	}
 
 	@Override
-	public String getUUID() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public void setUUID(String UUID) {
+		this.UUID = UUID;
 	}
 }
