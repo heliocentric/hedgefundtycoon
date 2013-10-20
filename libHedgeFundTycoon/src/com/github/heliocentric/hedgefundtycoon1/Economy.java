@@ -7,6 +7,7 @@ package com.github.heliocentric.hedgefundtycoon1;
 import com.github.heliocentric.hedgefundtycoon1.algorithm.FreeAlgorithm;
 import com.github.heliocentric.hedgefundtycoon1.algorithm.IAlgorithm;
 import com.github.heliocentric.hedgefundtycoon1.dbi.Database;
+import com.github.heliocentric.hedgefundtycoon1.dbi.Version;
 import com.github.heliocentric.hedgefundtycoon1.dbi.h2db;
 import java.io.File;
 
@@ -41,7 +42,7 @@ public class Economy {
 	public void EndTurn() {
 	}
 
-	public String getVersion() {
+	public Version getVersion() {
 		return this.db.GetVersion();
 	}
 

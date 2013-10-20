@@ -23,12 +23,15 @@ public final class h2db implements Database {
 
 	public h2db(String File) {
 		this.Open(File);
-		Logger.getLogger(Economy.class.getName()).log(Level.INFO, "Pre-UpdateSchema DB Version=" + this.GetVersion());
-		if (this.GetVersion().equals("0.0.0")) {
+		Logger.getLogger(Economy.class.getName()).log(Level.INFO, "Pre-UpdateSchema DB Version=" + this.GetVersion().ToString());
+		if (this.GetVersion().ToString().equals("0.0.0")) {
+			Logger.getLogger(Economy.class.getName()).log(Level.INFO, "Empty file, creating schema 1.0.1");
+
+
 			this.CreateSchema();
 		}
 		this.UpdateSchema();
-		Logger.getLogger(Economy.class.getName()).log(Level.INFO, "Post-UpdateSchema DB Version=" + this.GetVersion());
+		Logger.getLogger(Economy.class.getName()).log(Level.INFO, "Post-UpdateSchema DB Version=" + this.GetVersion().ToString());
 	}
 
 	@Override
@@ -51,16 +54,35 @@ public final class h2db implements Database {
 	}
 
 	@Override
-	public String GetVersion() {
-		String ver = "0.0.0";
+	public Version GetVersion() {
+		Version ver = new Version();
 		try {
-			Statement stmt = this.conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT fldValue FROM tblConfig WHERE fldName=\'schema\' LIMIT 1");
+
+			Statement stmt;
+			ResultSet rs;
+			stmt = this.conn.createStatement();
+			rs = stmt.executeQuery("SELECT fldValue FROM tblConfig WHERE fldName=\'schema_major\' LIMIT 1");
 			rs.next();
-			ver = rs.getString(1);
+			ver.Major = Integer.parseInt(rs.getString(1));
+			rs.close();
+			stmt.close();
+			stmt = this.conn.createStatement();
+			rs = stmt.executeQuery("SELECT fldValue FROM tblConfig WHERE fldName=\'schema_minor\' LIMIT 1");
+			rs.next();
+			ver.Minor = Integer.parseInt(rs.getString(1));
+			rs.close();
+			stmt.close();
+			stmt = this.conn.createStatement();
+			rs = stmt.executeQuery("SELECT fldValue FROM tblConfig WHERE fldName=\'schema_revision\' LIMIT 1");
+			rs.next();
+			ver.Revision = Integer.parseInt(rs.getString(1));
 			rs.close();
 			stmt.close();
 		} catch (SQLException ex) {
+			ver.Major = 0;
+			ver.Minor = 0;
+			ver.Revision = 0;
+			Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 		return ver;
@@ -76,15 +98,16 @@ public final class h2db implements Database {
 		this.BeginTransaction();
 		try {
 			this.schema_change("CREATE TABLE tblConfig (fldConfigID INT PRIMARY KEY AUTO_INCREMENT, fldName VARCHAR(255), fldValue VARCHAR(255));");
-			this.schema_change("INSERT INTO tblConfig (fldName, fldValue) VALUES('schema','1.0.1')");
+			this.schema_change("INSERT INTO tblConfig (fldName, fldValue) VALUES('schema_major','1')");
+			this.schema_change("INSERT INTO tblConfig (fldName, fldValue) VALUES('schema_minor','0')");
+			this.schema_change("INSERT INTO tblConfig (fldName, fldValue) VALUES('schema_revision','1')");
 		} catch (Exception ex) {
-	
+
 			Logger.getLogger(Economy.class.getName()).log(Level.SEVERE, null, ex);
 			this.RollBackTransaction();
 			return;
 		}
 		this.EndTransaction();
-		return;
 	}
 
 	@Override
@@ -103,72 +126,84 @@ public final class h2db implements Database {
 		try {
 			Statement stmt = this.conn.createStatement();
 			stmt.execute(sql);
-			
+
 		} catch (SQLException ex) {
 			throw ex;
 		}
 	}
-	
+
 	private void _UpdateVersionNumber(String New) throws Exception {
-			this.schema_change("UPDATE tblConfig SET fldValue = '" + New + "' WHERE fldName = 'schema'");
+		Version ver = new Version(New);
+		this.schema_change("UPDATE tblConfig SET fldValue = '" + ver.Major + "' WHERE fldName = 'schema_major'");
+		this.schema_change("UPDATE tblConfig SET fldValue = '" + ver.Minor + "' WHERE fldName = 'schema_minor'");
+		this.schema_change("UPDATE tblConfig SET fldValue = '" + ver.Revision + "' WHERE fldName = 'schema_revision'");
 	}
+
 	@Override
 	public void UpdateSchema() {
-		if (this.GetVersion().equals("1.0.1")) {
-			try {
-				this.BeginTransaction();
-				this.schema_change("CREATE TABLE tblUnit (fldUnitID INT PRIMARY KEY AUTO_INCREMENT, fldUnitSymbol VARCHAR(255), fldUnitName VARCHAR(255), fldUnitShortName VARCHAR(255), fldUnitType INT);");
-				this._UpdateVersionNumber("1.0.2");
-				this.EndTransaction();
-			} catch (Exception ex) {
-				this.RollBackTransaction();
-				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-		if (this.GetVersion().equals("1.0.2")) {
-			try {
-				this.BeginTransaction();
-				this.schema_change("CREATE TABLE tblUnitType (fldUnitID INT PRIMARY KEY AUTO_INCREMENT, fldUnitTypeName VARCHAR(255));");
-				this._UpdateVersionNumber("1.0.3");
-				this.EndTransaction();
-			} catch (Exception ex) {
-				this.RollBackTransaction();
-				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-		if (this.GetVersion().equals("1.0.3")) {
-			try {
-				this.BeginTransaction();
-				this.schema_change("CREATE TABLE tblBalance (fldBalanceID INT PRIMARY KEY AUTO_INCREMENT, fldBalanceUnitTypeID INT, fldBalanceValue DECIMAL(30,10))");
-				this.schema_change("CREATE TABLE tblFundamentalUnit (fldFundamentalUnitID INT PRIMARY KEY AUTO_INCREMENT, fldFundamentalUnitFundamentalID INT, fldFundamentalUnitType INT, fldFundamentalUnitName VARCHAR(255), fldFundamentalUnitBalanceID INT);");
-				this._UpdateVersionNumber("1.0.4");
-				this.EndTransaction();
-			} catch (Exception ex) {
-				this.RollBackTransaction();
-				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-		if (this.GetVersion().equals("1.0.4")) {
-			try {
-				this.BeginTransaction();
-				this.schema_change("CREATE TABLE tblCompany (fldCompanyID INT PRIMARY KEY AUTO_INCREMENT, fldCompanyUnitID INT, fldCompanyFundamentalID INT)");
-				this._UpdateVersionNumber("1.0.5");
-				this.EndTransaction();
-			} catch (Exception ex) {
-				this.RollBackTransaction();
-				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-		if (this.GetVersion().equals("1.0.5")) {
-			try {
-				this.BeginTransaction();
-				this.schema_change("CREATE TABLE tblAccount (fldAccountID INT PRIMARY KEY AUTO_INCREMENT, fldAccountBalanceID INT)");
-				this._UpdateVersionNumber("1.0.6");
-				this.EndTransaction();
-			} catch (Exception ex) {
-				this.RollBackTransaction();
-				Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
-			}
+		switch (this.GetVersion().Major) {
+			case 1:
+				if (this.GetVersion().Minor == 0) {
+					if (this.GetVersion().Revision == 1) {
+						try {
+							this.BeginTransaction();
+							this.schema_change("CREATE TABLE tblUnit (fldUnitID INT PRIMARY KEY AUTO_INCREMENT, fldUnitSymbol VARCHAR(255), fldUnitName VARCHAR(255), fldUnitShortName VARCHAR(255), fldUnitType INT);");
+							this._UpdateVersionNumber("1.0.2");
+							this.EndTransaction();
+						} catch (Exception ex) {
+							this.RollBackTransaction();
+							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
+					if (this.GetVersion().Revision == 2) {
+						try {
+							this.BeginTransaction();
+							this.schema_change("CREATE TABLE tblUnitType (fldUnitID INT PRIMARY KEY AUTO_INCREMENT, fldUnitTypeName VARCHAR(255));");
+							this._UpdateVersionNumber("1.0.3");
+							this.EndTransaction();
+						} catch (Exception ex) {
+							this.RollBackTransaction();
+							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
+					if (this.GetVersion().Revision == 3) {
+						try {
+							this.BeginTransaction();
+							this.schema_change("CREATE TABLE tblBalance (fldBalanceID INT PRIMARY KEY AUTO_INCREMENT, fldBalanceUnitTypeID INT, fldBalanceValue DECIMAL(30,10))");
+							this.schema_change("CREATE TABLE tblFundamentalUnit (fldFundamentalUnitID INT PRIMARY KEY AUTO_INCREMENT, fldFundamentalUnitFundamentalID INT, fldFundamentalUnitType INT, fldFundamentalUnitName VARCHAR(255), fldFundamentalUnitBalanceID INT);");
+							this._UpdateVersionNumber("1.0.4");
+							this.EndTransaction();
+						} catch (Exception ex) {
+							this.RollBackTransaction();
+							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
+					if (this.GetVersion().Revision == 4) {
+						try {
+							this.BeginTransaction();
+							this.schema_change("CREATE TABLE tblCompany (fldCompanyID INT PRIMARY KEY AUTO_INCREMENT, fldCompanyUnitID INT, fldCompanyFundamentalID INT)");
+							this._UpdateVersionNumber("1.0.5");
+							this.EndTransaction();
+						} catch (Exception ex) {
+							this.RollBackTransaction();
+							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
+					if (this.GetVersion().Revision == 5) {
+						try {
+							this.BeginTransaction();
+							this.schema_change("CREATE TABLE tblAccount (fldAccountID INT PRIMARY KEY AUTO_INCREMENT, fldAccountBalanceID INT)");
+							this._UpdateVersionNumber("1.0.6");
+							this.EndTransaction();
+						} catch (Exception ex) {
+							this.RollBackTransaction();
+							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
+				}
+				if (this.GetVersion().Minor == 1) {
+				}
+				break;
 		}
 	}
 }
