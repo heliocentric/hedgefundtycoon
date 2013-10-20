@@ -213,6 +213,22 @@ public final class h2db implements Database {
 							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
 						}
 					}
+					if (this.GetVersion().Revision == 7) {
+						try {
+							this.BeginTransaction();
+							this.schema_change("ALTER TABLE tblUnit ADD fldObjectUUID VARCHAR(36)");
+							this.schema_change("ALTER TABLE tblAccount ADD fldObjectUUID VARCHAR(36)");
+							this.schema_change("ALTER TABLE tblBalance ADD fldObjectUUID VARCHAR(36)");
+							this.schema_change("ALTER TABLE tblCompany ADD fldObjectUUID VARCHAR(36)");
+							this.schema_change("ALTER TABLE tblFundamentalUnit ADD fldObjectUUID VARCHAR(36)");
+							
+							this._UpdateVersionNumber("1.0.8");
+							this.EndTransaction();
+						} catch (Exception ex) {
+							this.RollBackTransaction();
+							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
 				}
 				if (this.GetVersion().Minor == 1) {
 				}
