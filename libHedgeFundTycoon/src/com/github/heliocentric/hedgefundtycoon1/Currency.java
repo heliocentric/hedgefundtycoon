@@ -52,25 +52,4 @@ public class Currency extends ThinObject implements Unit {
 		BigDecimal targetfactor = Currency.ConversionFactor();
 		return this._factor.divide(targetfactor);
 	}
-	private Database DB;
-	@Override
-	public void setDB(Database db) {
-		this.DB = db;
-	}
-
-	@Override
-	public Database getDB() {
-		return this.DB;
-	}
-
-	private String UUID;
-	@Override
-	public String getUUID() {
-		return this.UUID;
-	}
-
-	@Override
-	public void setUUID(String UUID) {
-		this.UUID = UUID;
-	}
 }

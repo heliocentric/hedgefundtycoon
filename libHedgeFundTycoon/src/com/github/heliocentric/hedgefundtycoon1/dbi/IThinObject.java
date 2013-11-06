@@ -13,4 +13,6 @@ public interface IThinObject {
 	public Database getDB();
 	public String getUUID();
 	public void setUUID(String UUID);
+	public String getStringValue(String Column);
+	public void setStringValue(String Column, String Value);
 }

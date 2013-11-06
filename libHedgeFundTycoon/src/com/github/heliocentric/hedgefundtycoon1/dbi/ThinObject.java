@@ -21,4 +21,23 @@ public abstract class ThinObject implements IThinObject {
 	public Database getDB() {
 		return this.DB;
 	}
+	
+	private String UUID;
+	@Override
+	public String getUUID() {
+		return this.UUID;
+	}
+
+	@Override
+	public void setUUID(String UUID) {
+		this.UUID = UUID;
+	}
+	@Override
+	public String getStringValue(String Column) {
+		return "";
+	}
+	@Override
+	public void setStringValue(String Column, String Value) {
+		
+	}
 }

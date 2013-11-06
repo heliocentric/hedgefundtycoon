@@ -8,7 +8,7 @@ package com.github.heliocentric.hedgefundtycoon1.algorithm;
  *
  * @author Owner
  */
-public class FreeAlgorithm implements IAlgorithm {
+public final class FreeAlgorithm implements IAlgorithm {
 	public FreeAlgorithm() {
 		this.Constructor(IAlgorithm.GameType.Easy);
 	}
