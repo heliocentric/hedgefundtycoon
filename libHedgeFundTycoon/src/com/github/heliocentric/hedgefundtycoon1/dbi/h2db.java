@@ -31,7 +31,7 @@ public final class h2db implements Database {
 			this.CreateSchema();
 		}
 		this.UpdateSchema();
-		Logger.getLogger(Economy.class.getName()).log(Level.INFO, "Post-UpdateSchema DB Version=" + this.GetVersion().ToString());
+		Logger.getLogger(Economy.class.getName()).log(Level.INFO, "Post-UpdateSchema DB Version={0}", this.GetVersion().ToString());
 	}
 
 	@Override
@@ -205,7 +205,7 @@ public final class h2db implements Database {
 							this.BeginTransaction();
 							this.schema_change("CREATE TABLE tblObject (fldObjectID INT PRIMARY KEY AUTO_INCREMENT, fldObjectUUID VARCHAR(36), fldObjectType VARCHAR(255))");
 							this.schema_change("ALTER TABLE tblObject ADD CONSTRAINT fldObjectUUID_unique UNIQUE(fldObjectUUID)");
-							
+
 							this._UpdateVersionNumber("1.0.7");
 							this.EndTransaction();
 						} catch (Exception ex) {
@@ -221,7 +221,7 @@ public final class h2db implements Database {
 							this.schema_change("ALTER TABLE tblBalance ADD fldObjectUUID VARCHAR(36)");
 							this.schema_change("ALTER TABLE tblCompany ADD fldObjectUUID VARCHAR(36)");
 							this.schema_change("ALTER TABLE tblFundamentalUnit ADD fldObjectUUID VARCHAR(36)");
-							
+
 							this._UpdateVersionNumber("1.0.8");
 							this.EndTransaction();
 						} catch (Exception ex) {
@@ -244,5 +244,21 @@ public final class h2db implements Database {
 	@Override
 	public IThinObject NewObject(String Type) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	public ResultSet getRow(String Table, String UUID) throws Exception {
+		Statement stmt;
+		ResultSet rs;
+		try {
+			stmt = this.conn.createStatement();
+			rs = stmt.executeQuery("SELECT fldValue FROM tblConfig WHERE fldName=\'schema_major\' LIMIT 1");
+			rs.next();
+			rs.close();
+			stmt.close();
+			return rs;
+		} catch (SQLException ex) {
+			throw new Exception();
+		}
+
 	}
 }
