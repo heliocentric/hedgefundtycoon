@@ -15,7 +15,7 @@ public abstract class ThinObject implements IThinObject {
 	private Database DB;
 	@Override
 	public void setDB(Database DB) {
-	
+		this.DB = DB;
 	}
 	@Override
 	public Database getDB() {

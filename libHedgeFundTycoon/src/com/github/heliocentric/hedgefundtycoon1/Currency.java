@@ -5,13 +5,14 @@
 package com.github.heliocentric.hedgefundtycoon1;
 
 import com.github.heliocentric.hedgefundtycoon1.dbi.Database;
+import com.github.heliocentric.hedgefundtycoon1.dbi.ThinObject;
 import java.math.BigDecimal;
 
 /**
  *
  * @author Helio
  */
-public class Currency implements Unit {
+public class Currency extends ThinObject implements Unit {
 
 	@Override
 	public BigDecimal Convert(Balance balance) {
