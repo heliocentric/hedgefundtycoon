@@ -229,6 +229,18 @@ public final class h2db implements Database {
 							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
 						}
 					}
+					if (this.GetVersion().Revision == 8) {
+						try {
+							this.BeginTransaction();
+							this.schema_change("ALTER TABLE tblUnitType ADD fldObjectUUID VARCHAR(36)");
+
+							this._UpdateVersionNumber("1.0.9");
+							this.EndTransaction();
+						} catch (Exception ex) {
+							this.RollBackTransaction();
+							Logger.getLogger(h2db.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
 				}
 				if (this.GetVersion().Minor == 1) {
 				}
@@ -251,7 +263,7 @@ public final class h2db implements Database {
 		ResultSet rs;
 		try {
 			stmt = this.conn.createStatement();
-			rs = stmt.executeQuery("SELECT fldValue FROM tblConfig WHERE fldName=\'schema_major\' LIMIT 1");
+			rs = stmt.executeQuery("SELECT * FROM " + Table + "WHERE fldObjectUUID = '" + UUID + "'");
 			rs.next();
 			rs.close();
 			stmt.close();
