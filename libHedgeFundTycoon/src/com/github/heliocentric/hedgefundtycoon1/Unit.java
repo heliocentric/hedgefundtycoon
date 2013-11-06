@@ -5,6 +5,7 @@
 package com.github.heliocentric.hedgefundtycoon1;
 
 import com.github.heliocentric.hedgefundtycoon1.dbi.Database;
+import com.github.heliocentric.hedgefundtycoon1.dbi.IThinObject;
 import com.github.heliocentric.hedgefundtycoon1.dbi.ThinObject;
 import java.math.BigDecimal;
 
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
  *
  * @author Helio
  */
-public interface Unit extends ThinObject {
+public interface Unit extends IThinObject {
 	@Override
 	public void setDB(Database db);
 	@Override

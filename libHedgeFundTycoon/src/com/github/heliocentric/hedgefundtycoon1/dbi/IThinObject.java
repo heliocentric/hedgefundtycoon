@@ -4,10 +4,13 @@
  */
 package com.github.heliocentric.hedgefundtycoon1.dbi;
 
-/**
+/*
  *
  * @author Owner
  */
-public abstract class ThinObject implements IThinObject {
-	
+public interface IThinObject {
+	public void setDB(Database DB);
+	public Database getDB();
+	public String getUUID();
+	public void setUUID(String UUID);
 }

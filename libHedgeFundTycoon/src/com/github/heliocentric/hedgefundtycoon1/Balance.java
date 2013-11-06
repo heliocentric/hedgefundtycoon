@@ -5,14 +5,14 @@
 package com.github.heliocentric.hedgefundtycoon1;
 
 import com.github.heliocentric.hedgefundtycoon1.dbi.Database;
-import com.github.heliocentric.hedgefundtycoon1.dbi.ThinObject;
+import com.github.heliocentric.hedgefundtycoon1.dbi.IThinObject;
 import java.math.BigDecimal;
 
 /**
  *
  * @author Helio
  */
-public class Balance implements ThinObject {
+public class Balance implements IThinObject {
 	public Unit Unit;
 	public BigDecimal Amount;
 	private Database DB;
